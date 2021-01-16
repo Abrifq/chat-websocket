@@ -1,3 +1,4 @@
+const port = require("process").env.PORT || 8080;
 const http = require("http");
 const fs = require("fs");
 const server = http.createServer((_incoming, outgoing) => {
@@ -7,5 +8,5 @@ const server = http.createServer((_incoming, outgoing) => {
     ).pipe(outgoing);
 });
 
-server.listen(8080);
+server.listen(port);
 exports.server = server;
