@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Launch the project first! See README-->
 <html lang="en-us">
 
 <head>
@@ -41,10 +42,9 @@
 
     <script type="text/javascript">
         {
-            /**@type {boolean}*/
             let isNameSet = false;
-            /**@type {string}*/
             let name = "";
+
             /**@type {WebSocket}*/
             let wsCon;
             /**@type {HTMLDivElement}*/
@@ -55,11 +55,13 @@
             const msgInput = document.getElementById("msg");
 
             const setName = () => {
+                ev.preventDefault();
                 name = nameInput.value.valueOf();
                 isNameSet = true;
                 nameInput.disabled = true;
             }
             const sendMSG = msgText => {
+                ev.preventDefault();
                 const msg = name + ": " + msgInput.value.valueOf();
                 msgInput.value = "";
                 wsCon.send(msg);
@@ -67,11 +69,11 @@
             const getMSG = msgText => {
                 const incomingMessage = document.createElement("p");
                 incomingMessage.innerText = msgText;
-                chatBox.appendChild(incomingMessage); //really, that's all.
+                chatBox.appendChild(incomingMessage);
             }
             const waitForNameSet = (async function () {
-                const waitTick = () => new Promise(r => setTimeout(r, 0));
-                while (!isNameSet) { await waitTick(); }
+                const waitATick = () => new Promise(r => setTimeout(r, 0)); //basically pause this async function while letting the frontend render and react
+                while (!isNameSet) { await waitATick(); }
                 return;
             })();
             const connectWS = async () => {
@@ -88,11 +90,10 @@
                     getMSG("" + ev.data);
                 }
             }
-            const eventWrapper = cb => ev => { ev.preventDefault(); cb(); }
-            document.getElementById("nameForm").onsubmit = eventWrapper(setName);
-            document.getElementById("msgForm").onsubmit = eventWrapper(sendMSG);
-            setTimeout(connectWS, 100)
-                }
+            document.getElementById("nameForm").onsubmit = setName;
+            document.getElementById("msgForm").onsubmit = sendMSG;
+            setTimeout(connectWS, 100);
+        }
     </script>
 </body>
 

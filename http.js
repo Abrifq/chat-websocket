@@ -4,7 +4,7 @@ const fs = require("fs");
 const server = http.createServer((incoming, outgoing) => {
     if (incoming.url === "/favicon.ico") { outgoing.writeHead(404, "Not Found"); outgoing.end(); return; }
     outgoing.writeHead(200, "OK", { "Content-Type": "text/html; charset=utf-8" });
-    fs.createReadStream("./page.html",
+    fs.createReadStream("./demo.html",
         { encoding: "utf8", mode: fs.constants.O_RDONLY, autoClose: true }
     ).pipe(outgoing);
 });

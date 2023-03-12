@@ -1,6 +1,7 @@
 const websocketServer = require("websocket").server;
 const httpServer = require("./http").server;
 const ws = new websocketServer({ httpServer });
+
 /**@type {Set<import('websocket').connection>} */
 const connections = new Set();
 ws.on("request", req => req.accept());
