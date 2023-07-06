@@ -30,11 +30,11 @@
 <body>
     <div id="chat">
     </div><br>
-    <form id="nameForm">
+    <form id="nameForm" method="dialog">
         <label>Set your name and press Enter.<input type="text" id="name"></label>
         <br>
     </form>
-    <form id="msgForm">
+    <form id="msgForm" method="dialog">
         <label>Write
             a message:<input type="text" id="msg" minlength="1" disabled></label>
         <br>
@@ -55,13 +55,11 @@
             const msgInput = document.getElementById("msg");
 
             const setName = () => {
-                ev.preventDefault();
                 name = nameInput.value.valueOf();
                 isNameSet = true;
                 nameInput.disabled = true;
             }
             const sendMSG = msgText => {
-                ev.preventDefault();
                 const msg = name + ": " + msgInput.value.valueOf();
                 msgInput.value = "";
                 wsCon.send(msg);
